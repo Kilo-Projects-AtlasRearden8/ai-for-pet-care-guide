@@ -2,7 +2,7 @@
 
 ## What was built
 
-A privacy-first beginner manual for using AI in pet care, plus a static HTML version of the same content, published by Asdale Dynamics, LLC (Indiana, formed October 2026).
+A privacy-first beginner manual for using AI in pet care, plus a static HTML version of the same content, published by Asdale Dynamics, LLC (Indiana, formed October 2026). Written "like a friend would": plain English, step by step, never condescending.
 
 **`docs/`** — 9 markdown sections:
 - `index.md` — overview and how to use the manual
@@ -23,6 +23,8 @@ A privacy-first beginner manual for using AI in pet care, plus a static HTML ver
 
 **`templates/`** — blank CSV logs (medication, vet visit, feeding schedule, behavior) and a markdown pet-sitter care sheet template. Rows contain clearly fictional example data only.
 
+**`scripts/`** — `verify.sh`, a repeatable verification script that checks HTML well-formedness and links, runs htmlhint, validates CSV templates, confirms the LICENSE copyright line and README credit, scans for secrets, and checks for forbidden files.
+
 **Root** — `README.md`, `LICENSE` (MIT, exact copyright line: `Copyright (c) 2026 Asdale Dynamics, LLC`), `STATUS.md`.
 
 ## How to run it
@@ -37,18 +39,23 @@ No installation required. The site is plain HTML/CSS/JS:
 
 ## Verification results
 
-- HTML validity/link check (custom Python script over all 10 HTML files): 0 broken links, 0 parse errors
+Run the included script: `./scripts/verify.sh`
+
+Last run: **all checks passed**.
+
+- HTML well-formedness and internal links (all 10 HTML files): 0 parse errors, 0 broken links, no unexpected external links
 - htmlhint 1.9.2 lint: scanned 10 files, no errors found
 - CSV templates: all 4 parse correctly (header + 1 fictional example row each)
 - `LICENSE`: exact copyright line `Copyright (c) 2026 Asdale Dynamics, LLC` present; MIT License header present
 - `README.md`: credits Asdale Dynamics, LLC
-- Secrets scan (API key/password/secret patterns): none found
+- Secrets scan (API key/password/secret/private-key patterns): none found
 - `.github/workflows`: not present (not added)
 - No personal data, API keys, or secrets in any file
 
 ## Known gaps
 
-- No automated test suite (project is static documentation; verification is manual inspection + lint above).
+- No automated test suite beyond the verify script (project is static documentation; verification is lint + link + template checks above).
 - No full-text search on the static site.
 - Example data in CSV templates is fictional and labeled as such; users must replace with their own (paper-only) real details.
 - No backend — AI prompts are executed by the user in whatever AI tool they choose; this repo does not include or call any AI service.
+- The manual covers the core pet-care topics; it does not include advanced AI topics (agents/MCP, local-LLM setup) that the LLC may add later.
